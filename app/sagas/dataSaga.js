@@ -11,6 +11,7 @@ import NewsService from '../services/newsService'
 import ParkingService from '../services/parkingService'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
 import TutorService from '../services/tutoringService'
+import { authorizedFetch } from '../util/auth'
 
 import TutorAPI from '../tutornotifications/TutorAPI'
 
@@ -24,7 +25,8 @@ import {
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
 	PARKING_API_TTL,
-	TUTOR_SAGA_TTL
+	TUTOR_SAGA_TTL,
+	SEND_TOPIC_MESSAGE_URL
 } from '../AppSettings'
 
 const getWeather = state => (state.weather)
@@ -117,20 +119,19 @@ function* updateNotification() {
 				}
 			}
 			try {
-				// const messageID = JSON.parse(yield authorizedFetch(AppSettings.SEND_TOPIC_MESSAGE_URL, message))
-				console.log(message)
+				const messageID = JSON.parse(yield authorizedFetch(SEND_TOPIC_MESSAGE_URL, message))
 
-				Toast.showWithGravity(
-					messageContent,
-					Toast.LONG,
-					Toast.TOP
-				)
+				if (messageID) {
+					console.log('SUCCESS: Push notification sent to `tutoring` topic (messageID: ' + messageID + ')')
+				} else {
+					console.log('ERROR: Push notification failed to send.')
+				}
 			} catch (err) {
 				console.log('Err: ' + err)
 			}
 		}
 	} catch (err) {
-		console.log('errn-----------------------------------')
+		console.log('updateNotification:catch:error:')
 		console.log(err)
 	}
 }
