@@ -11,6 +11,7 @@ const forge = require('node-forge')
 
 const { pki } = forge
 const accessTokenSiteName = 'https://ucsd.edu'
+const PUSH_ACCESS_TOKEN = 'PUSH_ACCESS_TOKEN_PH'
 
 // A "private" internal function that lets us
 // send a fetchrequest with the correct
@@ -197,8 +198,16 @@ module.exports = {
 
 		try {
 			let endpointResponse
-			if (payload) endpointResponse = yield authorizedPostRequest(endpoint, accessToken, payload)
-			else endpointResponse = yield authorizedFetchRequest(endpoint, accessToken)
+			if (payload)  {
+				if (payload.to.topics.includes('tutoring')) {
+					console.log('Send tutoring notification---------------')
+					endpointResponse = yield authorizedPostRequest(endpoint, PUSH_ACCESS_TOKEN, payload)
+				} else {
+					endpointResponse = yield authorizedPostRequest(endpoint, accessToken, payload)
+				}
+			} else {
+				endpointResponse = yield authorizedFetchRequest(endpoint, accessToken)
+			}
 
 			// Refresh token if invalidToken and retry request
 			if (endpointResponse.invalidToken) {

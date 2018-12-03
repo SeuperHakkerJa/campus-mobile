@@ -19,6 +19,7 @@ if (ENV_TYPE === 'ci') {
 // File Paths
 const APP_SETTINGS_PATH = './app/AppSettings.js',
 	SSO_SERVICE_PATH = './app/services/ssoService.js',
+	AUTH_UTIL_PATH = './app/util/auth.js',
 	IOS_INFO_PLIST_PATH = './ios/CampusMobile/Info.plist',
 	ANDROID_STRINGS_PATH = './android/app/src/main/res/values/strings.xml',
 	ANDROID_MANIFEST_PATH = './android/app/src/main/AndroidManifest.xml',
@@ -47,6 +48,7 @@ const PH = {
 	GS_ANDROID_API_KEY_PH: 'GS_ANDROID_API_KEY_PH',
 	GS_ANDROID_APP_ID_PH: '1:1:android:1',
 	GS_ANDROID_BUNDLE_ID_PH: 'edu.ucsd',
+	PUSH_ACCESS_TOKEN_PH: 'PUSH_ACCESS_TOKEN_PH',
 }
 
 if (REPLACEMENT_ENV === 'prod' || REPLACEMENT_ENV === 'qa') {
@@ -101,6 +103,11 @@ if (REPLACEMENT_ENV === 'prod' || REPLACEMENT_ENV === 'qa') {
 		{ prodVal: myEnv.GS_PROD_STORAGE_BUCKET, 				qaVal: myEnv.GS_QA_STORAGE_BUCKET, 				phVal: PH.GS_STORAGE_BUCKET_PH },
 		{ prodVal: myEnv.GS_PROD_PROJECT_ID, 					qaVal: myEnv.GS_QA_PROJECT_ID, 					phVal: PH.GS_PROJECT_ID_PH },
 		{ prodVal: myEnv.GS_PROD_PROJECT_NUMBER, 				qaVal: myEnv.GS_QA_PROJECT_NUMBER, 				phVal: PH.GS_PROJECT_NUMBER_PH },
+	])
+
+	// auth.js
+	makeReplacements(AUTH_UTIL_PATH, REPLACEMENT_ENV, [
+		{ prodVal: myEnv.PUSH_ACCESS_TOKEN_PROD, qaVal: myEnv.PUSH_ACCESS_TOKEN_QA, phVal: PH.PUSH_ACCESS_TOKEN_PH },
 	])
 } else {
 	console.log('Error: Replacement type not specififed.\nSample Usage: npm run-script [campus-prod|campus-qa]')
