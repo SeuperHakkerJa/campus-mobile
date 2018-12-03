@@ -16,6 +16,7 @@ module.exports = {
 	MP_REGISTRATION_API_URL: 'https://api-qa.ucsd.edu:8243/mp-registration/1.0.0',
 	MESSAGES_TOPICS_URL: 'https://s3-us-west-1.amazonaws.com/ucsd-mobile-dev/mock-apis/messaging/topics.json',
 	SHUTTLE_PATHS_URL: 'https://11wl1gc3v9.execute-api.us-west-2.amazonaws.com/dev/polylines/',
+	SEND_TOPIC_MESSAGE_URL: 'https://api-qa.ucsd.edu:8243/mp-messages/1.0.0/messages',
 
 	/* TUTORING */
 	TUTORING_SCHE_URL: 'https://s3-us-west-1.amazonaws.com/ucsd-mobile-dev/mock-apis/tutoring/tutors-v2.json',
