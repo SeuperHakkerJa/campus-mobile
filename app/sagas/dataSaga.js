@@ -104,19 +104,32 @@ function* updateNotification() {
 		console.log('updateNotification:sessionList-----------------------------------------')
 		console.log(sessionList)
 
+		const userEmail = profile.username + '@ucsd.edu'
 		for (let i = 0; i < sessionList.length; i++) {
 			const messageContent = 'A tutoring session for your class is about to begin! Come to ' + sessionList[i].building +
 			' ' + sessionList[i].room + ' at ' + sessionList[i].time + ' for your ' + sessionList[i].course + ' session'
 
+			//const message = {
+			//	'to': {
+			//		'user':
+			//	},
+			//	'body': {
+			//		title: 'Upcoming SI sessions',
+			//		message: messageContent,
+			//		data: {}
+			//	}
+			//}
 			const message = {
-				'to': {
-					'topics': ['tutoring']
-				},
-				'body': {
-					title: 'Upcoming SI sessions',
-					message: messageContent,
-					data: {}
-				}
+    		"to": {
+        		"users": [
+            		userEmail
+        		]
+    		},
+    			"body": {
+        		"title": 'Upcoming SI sessions',
+        		"message": messageContent,
+        		"data": {}
+    			}
 			}
 			try {
 				const messageID = JSON.parse(yield authorizedFetch(SEND_TOPIC_MESSAGE_URL, message))
