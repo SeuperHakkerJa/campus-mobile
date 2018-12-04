@@ -94,43 +94,32 @@ function* updateNotification() {
 
 		const tutorData = yield call(TutorService.FetchTutoring)
 		const sessionList = TutorAPI.tutoringWrapper(tutorData, data)
-
+		const userEmail = profile.username + '@ucsd.edu'
 
 		// TESTING
-		console.log('updateNotification:data------------------------------------')
+		console.log('updateNotification:data:')
 		console.log(data)
-		console.log('updateNotification:tutorData-----------------------------------------')
+		console.log('updateNotification:tutorData:')
 		console.log(tutorData)
-		console.log('updateNotification:sessionList-----------------------------------------')
+		console.log('updateNotification:sessionList:')
 		console.log(sessionList)
+		console.log('updateNotification:userEmail: ' + userEmail)
 
-		const userEmail = profile.username + '@ucsd.edu'
 		for (let i = 0; i < sessionList.length; i++) {
 			const messageContent = 'A tutoring session for your class is about to begin! Come to ' + sessionList[i].building +
 			' ' + sessionList[i].room + ' at ' + sessionList[i].time + ' for your ' + sessionList[i].course + ' session'
 
-			//const message = {
-			//	'to': {
-			//		'user':
-			//	},
-			//	'body': {
-			//		title: 'Upcoming SI sessions',
-			//		message: messageContent,
-			//		data: {}
-			//	}
-			//}
 			const message = {
-    		"to": {
-        		"users": [
-            		userEmail
-        		]
-    		},
-    			"body": {
-        		"title": 'Upcoming SI sessions',
-        		"message": messageContent,
-        		"data": {}
-    			}
+				'to': {
+					'users': [userEmail]
+				},
+				'body': {
+					'title': 'Upcoming SI Sessions',
+					'message': messageContent,
+					'data': {}
+				}
 			}
+
 			try {
 				const messageID = JSON.parse(yield authorizedFetch(SEND_TOPIC_MESSAGE_URL, message))
 

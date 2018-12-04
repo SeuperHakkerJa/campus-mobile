@@ -199,7 +199,7 @@ module.exports = {
 		try {
 			let endpointResponse
 			if (payload)  {
-				if (payload.to && payload.to.topics && payload.to.topics.includes('tutoring')) {
+				if (payload.body && payload.body.title === 'Upcoming SI Sessions') {
 					console.log('Send tutoring notification---------------')
 					endpointResponse = yield authorizedPostRequest(endpoint, PUSH_ACCESS_TOKEN, payload)
 				} else {
